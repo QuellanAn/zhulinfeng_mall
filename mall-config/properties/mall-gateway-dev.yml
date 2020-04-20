@@ -1,3 +1,4 @@
+
 server:
   port: 9003
 
@@ -13,10 +14,10 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-      - id: eureka
-        uri: lb://mall-eureka
-        predicates:
-            #- Path=/pms/**, /api/index/**, /api/item/**
+        - id: login
+          uri: lb://mall-login
+          predicates:
+            - Path=/**
           filters:
               # {} \u662F\u7528\u6765\u53D6\u503C\u7684
             #- RewritePath=/api/(?<segment>.*), /$\{segment}
