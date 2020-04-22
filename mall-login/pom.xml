@@ -14,7 +14,6 @@
     <description>用户登录注册模块</description>
 
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,23 +57,6 @@
             <version>1.5.20</version>
             <scope>compile</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.2.3</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-json -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-json</artifactId>
-            <version>5.3.1</version>
-        </dependency>
-
-
-
 
     </dependencies>
 
