@@ -5,22 +5,52 @@
 
 <generatorConfiguration>
     <properties resource="generator.properties"/>
+
+    <!--
+        context:生成一组对象的环境
+        id:必选，上下文id，用于在生成错误时提示
+        defaultModelType:指定生成对象的样式
+            1，conditional：类似hierarchical；
+            2，flat：所有内容（主键，blob）等全部生成在一个对象中；
+            3，hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+        targetRuntime:
+            1，MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+            2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+        introspectedColumnImpl：类全限定名，用于扩展MBG
+    -->
     <context id="MySqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+            一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+         -->
+        <property name="autoDelimitKeywords" value="false"/>
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
-        <property name="javaFileEncoding" value="UTF-8"/>
+
         <!-- 为模型生成序列化方法-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!-- 为生成的Java模型创建一个toString方法 -->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <!--<commentGenerator type="cn.quellanan.zhulinfeng.CommentGenerator">
-            &lt;!&ndash; 是否去除自动生成的注释 true：是 ： false:否 &ndash;&gt;
+        <!--<commentGenerator type="cn.quellanan.zhulinfeng.MyCommentGenerator">
+            <property name="author" value="zhulinfeng"/>
+            <property name="dateFormat" value="yyyy/MM/dd"/>
+        </commentGenerator>-->
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
             <property name="addRemarkComments" value="true"/>
-        </commentGenerator>-->
+        </commentGenerator>
 
         <jdbcConnection driverClass="${jdbc.driverClass}"
                         connectionURL="${jdbc.connectionURL}"
@@ -28,19 +58,18 @@
                         password="${jdbc.password}">
             <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
             <property name="nullCatalogMeansCurrent" value="true" />
+            <property name="useInformationSchema" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="cn.quellanan.zhulinfeng.model" targetProject="src/main/java"/>
 
+        <javaModelGenerator targetPackage="cn.quellanan.zhulinfeng.mall.login.model" targetProject="src/main/java"/>
 
+        <sqlMapGenerator targetPackage="cn.quellanan.zhulinfeng.mall.login.mapper.xml" targetProject="src/main/java"/>
 
-
-        <sqlMapGenerator targetPackage="cn.quellanan.zhulinfeng.mapper" targetProject="src/main/resources"/>
-
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.quellanan.zhulinfeng.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.quellanan.zhulinfeng.mall.login.mapper"
                              targetProject="src/main/java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="%">
+        <table tableName="ums_%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>
