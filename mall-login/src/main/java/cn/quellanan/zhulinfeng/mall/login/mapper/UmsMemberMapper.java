@@ -2,10 +2,12 @@ package cn.quellanan.zhulinfeng.mall.login.mapper;
 
 import cn.quellanan.zhulinfeng.mall.login.model.UmsMember;
 import cn.quellanan.zhulinfeng.mall.login.model.UmsMemberExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface UmsMemberMapper {
     long countByExample(UmsMemberExample example);
 

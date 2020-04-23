@@ -7,10 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,5 +46,10 @@ public class UserAdminController {
             return CommonResult.validateFailed("用户名或密码错误");
         }
         return CommonResult.success(umsAdmin1);
+    }
+
+    @RequestMapping("/hello")
+    public String hello(){
+        return "hello";
     }
 }
